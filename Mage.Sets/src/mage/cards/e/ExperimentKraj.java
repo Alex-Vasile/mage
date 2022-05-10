@@ -56,7 +56,8 @@ public final class ExperimentKraj extends CardImpl {
 
 class ExperimentKrajEffect extends ContinuousEffectImpl {
 
-    private static final FilterCreaturePermanent filter = new FilterCreaturePermanent();
+    private static final FilterCreaturePermanent filter = new FilterCreaturePermanent("each other creature with a +1/+1 counter on it");
+
     static {
         filter.add(CounterType.P1P1.getPredicate());
         filter.add(AnotherPredicate.instance);
@@ -75,7 +76,7 @@ class ExperimentKrajEffect extends ContinuousEffectImpl {
     public boolean apply(Game game, Ability source) {
         Permanent perm = game.getPermanent(source.getSourceId());
         if (perm != null) {
-            for (Permanent creature :game.getState().getBattlefield().getActivePermanents(filter, source.getControllerId(), source.getSourceId(), game)){
+            for (Permanent creature :game.getState().getBattlefield().getActivePermanents(filter, source.getControllerId(), source, game)){
                 for (Ability ability: creature.getAbilities()) {
                     if (ability instanceof ActivatedAbility) {
                         perm.addAbility(ability, source.getSourceId(), game);

@@ -11,6 +11,7 @@ import mage.game.Game;
 import mage.game.permanent.Permanent;
 import mage.players.Player;
 import mage.target.Target;
+import mage.util.CardUtil;
 
 import java.util.UUID;
 
@@ -152,17 +153,31 @@ public class DamageTargetEffect extends OneShotEffect {
         String message = amount.getMessage();
         sb.append(this.sourceName).append(" deals ");
         if (message.isEmpty() || !message.equals("1")) {
-            sb.append(amount).append(' ');
+            sb.append(amount);
+        }
+        if (!sb.toString().endsWith(" ")) {
+            sb.append(' ');
         }
         sb.append("damage to ");
         if (!targetDescription.isEmpty()) {
             sb.append(targetDescription);
         } else {
             if (!mode.getTargets().isEmpty()) {
-                String targetName = mode.getTargets().get(0).getTargetName();
+                Target firstTarget = mode.getTargets().get(0);
+                String targetName = firstTarget.getTargetName();
                 if (targetName.contains("any")) {
                     sb.append(targetName);
                 } else {
+                    if (firstTarget.getMinNumberOfTargets() == 0) {
+                        int maxTargets = firstTarget.getMaxNumberOfTargets();
+                        if (maxTargets == Integer.MAX_VALUE) {
+                            sb.append("any number of ");
+                        } else {
+                            sb.append("up to ");
+                            sb.append(CardUtil.numberToText(maxTargets));
+                            sb.append(' ');
+                        }
+                    }
                     sb.append("target ").append(targetName);
                 }
             } else {

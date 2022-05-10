@@ -4,7 +4,7 @@ package mage.cards.s;
 import java.util.UUID;
 
 import mage.abilities.common.BeginningOfEndStepTriggeredAbility;
-import mage.abilities.common.ControlledCreaturesDealCombatDamagePlayerTriggeredAbility;
+import mage.abilities.common.DealCombatDamageControlledTriggeredAbility;
 import mage.abilities.condition.common.PermanentsOnTheBattlefieldCondition;
 import mage.abilities.decorator.ConditionalInterveningIfTriggeredAbility;
 import mage.abilities.effects.common.CreateTokenEffect;
@@ -29,16 +29,15 @@ public final class StormTheVault extends CardImpl {
 
         this.addSuperType(SuperType.LEGENDARY);
 
-        this.transformable = true;
         this.secondSideCardClazz = mage.cards.v.VaultOfCatlacan.class;
 
         // Whenever one or more creatures you control deal combat damage to a player, create a colorless Treasure artifact token with "{T}, Sacrifice this artifact: Add one mana of any color."
-        this.addAbility(new ControlledCreaturesDealCombatDamagePlayerTriggeredAbility(new CreateTokenEffect(new TreasureToken())));
+        this.addAbility(new DealCombatDamageControlledTriggeredAbility(new CreateTokenEffect(new TreasureToken())));
 
         // At the beginning of your end step, if you control five or more artifacts, transform Storm the Vault.
         this.addAbility(new TransformAbility());
         this.addAbility(new ConditionalInterveningIfTriggeredAbility(
-                new BeginningOfEndStepTriggeredAbility(new TransformSourceEffect(true), TargetController.YOU, false),
+                new BeginningOfEndStepTriggeredAbility(new TransformSourceEffect(), TargetController.YOU, false),
                 new PermanentsOnTheBattlefieldCondition(StaticFilters.FILTER_CONTROLLED_PERMANENT_ARTIFACT, ComparisonType.MORE_THAN, 4),
                 "At the beginning of your end step, if you control five or more artifacts, transform {this}"));
 

@@ -95,7 +95,7 @@ class MantleOfTheAncientsEffect extends OneShotEffect {
         FilterCard filter = new FilterCard("Aura or Equipment card that can be attached to " + permanent.getName());
         filter.add(new MantleOfTheAncientsPredicate(permanent));
         TargetCard target = new TargetCardInYourGraveyard(0, Integer.MAX_VALUE, filter, true);
-        player.choose(outcome, target, source.getSourceId(), game);
+        player.choose(outcome, target, source, game);
         Cards cards = new CardsImpl(target.getTargets());
         if (cards.isEmpty()) {
             return false;
@@ -137,11 +137,12 @@ enum MantleOfTheAncientsValue implements DynamicValue {
 
     @Override
     public int calculate(Game game, Ability sourceAbility, Effect effect) {
-        Permanent permanent = sourceAbility.getSourcePermanentOrLKI(game);
-        if (permanent == null) {
+        Permanent sourcePermanent = sourceAbility.getSourcePermanentOrLKI(game);
+        if (sourcePermanent == null) {
             return 0;
         }
-        return permanent
+        Permanent permanent = game.getPermanent(sourcePermanent.getAttachedTo());
+        return permanent == null ? 0 : permanent
                 .getAttachments()
                 .stream()
                 .map(game::getPermanentOrLKIBattlefield)

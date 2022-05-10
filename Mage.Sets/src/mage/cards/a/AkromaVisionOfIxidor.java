@@ -104,9 +104,9 @@ class AkromaVisionOfIxidorEffect extends OneShotEffect {
     public boolean apply(Game game, Ability source) {
         for (Permanent permanent : game.getBattlefield().getActivePermanents(
                 StaticFilters.FILTER_CONTROLLED_ANOTHER_CREATURE,
-                source.getControllerId(), source.getSourceId(), game
+                source.getControllerId(), source, game
         )) {
-            Abilities abilities = permanent.getAbilities(game);
+            Abilities<Ability> abilities = permanent.getAbilities(game);
             int count = classes
                     .stream()
                     .map(clazz -> abilities.stream().anyMatch(clazz::isInstance))
@@ -114,7 +114,7 @@ class AkromaVisionOfIxidorEffect extends OneShotEffect {
                     .sum();
             if (count > 0) {
                 ContinuousEffect effect = new BoostTargetEffect(count, count, Duration.EndOfTurn);
-                effect.setTargetPointer(new FixedTarget(permanent.getId()));
+                effect.setTargetPointer(new FixedTarget(permanent.getId(), game));
                 game.addEffect(effect, source);
             }
         }

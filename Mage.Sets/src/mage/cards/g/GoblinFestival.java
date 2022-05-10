@@ -71,15 +71,15 @@ class GoblinFestivalChangeControlEffect extends OneShotEffect {
             if (!controller.flipCoin(source, game, true)) {
                 if (sourcePermanent != null) {
                     Target target = new TargetOpponent(true);
-                    if (target.canChoose(source.getSourceId(), controller.getId(), game)) {
-                        while (!target.isChosen() && target.canChoose(source.getSourceId(), controller.getId(), game) && controller.canRespond()) {
+                    if (target.canChoose(controller.getId(), source, game)) {
+                        while (!target.isChosen() && target.canChoose(controller.getId(), source, game) && controller.canRespond()) {
                             controller.chooseTarget(outcome, target, source, game);
                         }
                     }
                     Player chosenOpponent = game.getPlayer(target.getFirstTarget());
                     if (chosenOpponent != null) {
                         ContinuousEffect effect = new GoblinFestivalGainControlEffect(Duration.Custom, chosenOpponent.getId());
-                        effect.setTargetPointer(new FixedTarget(sourcePermanent.getId()));
+                        effect.setTargetPointer(new FixedTarget(sourcePermanent.getId(), game));
                         game.addEffect(effect, source);
                         game.informPlayers(chosenOpponent.getLogName() + " has gained control of " + sourcePermanent.getLogName());
                         return true;

@@ -35,7 +35,7 @@ public class GetEmblemEffect extends OneShotEffect {
 
     @Override
     public boolean apply(Game game, Ability source) {
-        MageObject sourceObject = game.getObject(source.getSourceId());
+        MageObject sourceObject = game.getObject(source);
         if (sourceObject == null) {
             return false;
         }
@@ -45,7 +45,7 @@ public class GetEmblemEffect extends OneShotEffect {
 
     public String getText() {
         StringBuilder sb = new StringBuilder();
-        sb.append("You get an emblem with \"");
+        sb.append("you get an emblem with \"");
         List<String> rules = emblem.getAbilities().getRules(null);
         if (rules.size() == 1) {
             for (String s : rules) {

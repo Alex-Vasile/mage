@@ -38,7 +38,6 @@ public final class VengefulStrangler extends CardImpl {
         this.subtype.add(SubType.ROGUE);
         this.power = new MageInt(2);
         this.toughness = new MageInt(1);
-        this.transformable = true;
         this.secondSideCardClazz = mage.cards.s.StranglingGrasp.class;
 
         // Vengeful Strangler can't block.
@@ -93,8 +92,7 @@ class VengefulStranglerEffect extends OneShotEffect {
         }
 
         game.getState().setValue(TransformAbility.VALUE_KEY_ENTER_TRANSFORMED + source.getSourceId(), Boolean.TRUE);
-        UUID secondFaceId = game.getCard(source.getSourceId()).getSecondCardFace().getId();
-        game.getState().setValue("attachTo:" + secondFaceId, permanent.getId());
+        game.getState().setValue("attachTo:" + source.getSourceId(), permanent);
         if (controller.moveCards(card, Zone.BATTLEFIELD, source, game)) {
             permanent.addAttachment(card.getId(), source, game);
         }

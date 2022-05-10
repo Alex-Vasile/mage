@@ -52,7 +52,7 @@ public final class FlamerushRider extends CardImpl {
         this.addAbility(ability);
 
         // Dash {2}{R}{R}
-        this.addAbility(new DashAbility(this, "{2}{R}{R}"));
+        this.addAbility(new DashAbility("{2}{R}{R}"));
     }
 
     private FlamerushRider(final FlamerushRider card) {
@@ -89,7 +89,7 @@ class FlamerushRiderEffect extends OneShotEffect {
             CreateTokenCopyTargetEffect effect = new CreateTokenCopyTargetEffect(source.getControllerId(), null, true, 1, true, true);
             effect.setTargetPointer(new FixedTarget(permanent, game));
             effect.apply(game, source);
-            for (Permanent addedToken : effect.getAddedPermanent()) {
+            for (Permanent addedToken : effect.getAddedPermanents()) {
                 Effect exileEffect = new ExileTargetEffect();
                 exileEffect.setTargetPointer(new FixedTarget(addedToken, game));
                 new CreateDelayedTriggeredAbilityEffect(new AtTheEndOfCombatDelayedTriggeredAbility(exileEffect), false).apply(game, source);

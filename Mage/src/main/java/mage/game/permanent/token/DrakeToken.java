@@ -14,17 +14,17 @@ import java.util.Arrays;
 public final class DrakeToken extends TokenImpl {
 
     public DrakeToken() {
-        super("Drake", "2/2 blue Drake creature token with flying");
+        super("Drake Token", "2/2 blue Drake creature token with flying");
         this.cardType.add(CardType.CREATURE);
         this.subtype.add(SubType.DRAKE);
 
-        this.color = ObjectColor.BLUE;
+        this.color.setBlue(true);
         this.power = new MageInt(2);
         this.toughness = new MageInt(2);
 
         this.addAbility(FlyingAbility.getInstance());
 
-        availableImageSetCodes = Arrays.asList("AKH", "C15", "C19", "M13", "C20", "ZNR", "C21");
+        availableImageSetCodes = Arrays.asList("AKH", "C15", "C19", "M13", "C20", "ZNR", "C21", "UMA");
     }
 
     public DrakeToken(final DrakeToken token) {

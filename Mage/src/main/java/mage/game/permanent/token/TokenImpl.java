@@ -3,7 +3,13 @@ package mage.game.permanent.token;
 import mage.MageObject;
 import mage.MageObjectImpl;
 import mage.abilities.Ability;
+import mage.abilities.SpellAbility;
+import mage.abilities.effects.Effect;
+import mage.abilities.effects.common.AttachEffect;
+import mage.abilities.keyword.EnchantAbility;
 import mage.cards.Card;
+import mage.constants.Outcome;
+import mage.constants.SubType;
 import mage.constants.Zone;
 import mage.game.Game;
 import mage.game.events.CreateTokenEvent;
@@ -12,23 +18,18 @@ import mage.game.events.ZoneChangeEvent;
 import mage.game.permanent.Permanent;
 import mage.game.permanent.PermanentToken;
 import mage.players.Player;
+import mage.target.Target;
 import mage.util.RandomUtil;
 
 import java.util.*;
 
-import mage.abilities.SpellAbility;
-import mage.abilities.effects.Effect;
-import mage.abilities.effects.common.AttachEffect;
-import mage.abilities.keyword.EnchantAbility;
-import mage.constants.Outcome;
-import mage.constants.SubType;
-import mage.target.Target;
-
+/**
+ * Each token must have default constructor without params (GUI require for card viewer)
+ */
 public abstract class TokenImpl extends MageObjectImpl implements Token {
 
     protected String description;
     private final ArrayList<UUID> lastAddedTokenIds = new ArrayList<>();
-    private UUID lastAddedTokenId;
     private int tokenType;
     private String originalCardNumber;
     private String originalExpansionSetCode;
@@ -74,7 +75,6 @@ public abstract class TokenImpl extends MageObjectImpl implements Token {
         super(token);
         this.description = token.description;
         this.tokenType = token.tokenType;
-        this.lastAddedTokenId = token.lastAddedTokenId;
         this.lastAddedTokenIds.addAll(token.lastAddedTokenIds);
         this.originalCardNumber = token.originalCardNumber;
         this.originalExpansionSetCode = token.originalExpansionSetCode;
@@ -112,11 +112,6 @@ public abstract class TokenImpl extends MageObjectImpl implements Token {
     }
 
     @Override
-    public UUID getLastAddedToken() {
-        return lastAddedTokenId;
-    }
-
-    @Override
     public List<UUID> getLastAddedTokenIds() {
         return new ArrayList<>(lastAddedTokenIds);
     }
@@ -125,6 +120,41 @@ public abstract class TokenImpl extends MageObjectImpl implements Token {
     public void addAbility(Ability ability) {
         ability.setSourceId(this.getId());
         abilities.add(ability);
+        abilities.addAll(ability.getSubAbilities());
+    }
+
+    // Directly from PermanentImpl
+    @Override
+    public void removeAbility(Ability abilityToRemove) {
+        if (abilityToRemove == null) {
+            return;
+        }
+
+        // 112.10b  Effects that remove an ability remove all instances of it.
+        List<Ability> toRemove = new ArrayList<>();
+        abilities.forEach(a -> {
+            if (a.isSameInstance(abilityToRemove)) {
+                toRemove.add(a);
+            }
+        });
+
+        // TODO: what about triggered abilities? See addAbility above -- triggers adds to GameState
+        toRemove.forEach(r -> abilities.remove(r));
+    }
+
+    // Directly from PermanentImpl
+    @Override
+    public void removeAbilities(List<Ability> abilitiesToRemove) {
+        if (abilitiesToRemove == null) {
+            return;
+        }
+
+        abilitiesToRemove.forEach(a -> removeAbility(a));
+    }
+
+    @Override
+    public boolean putOntoBattlefield(int amount, Game game, Ability source) {
+        return this.putOntoBattlefield(amount, game, source, source.getControllerId());
     }
 
     @Override
@@ -186,7 +216,7 @@ public abstract class TokenImpl extends MageObjectImpl implements Token {
             if (amountToRemove > 0) {
                 game.informPlayers(
                         "The token limit per player is " + MAX_TOKENS_PER_GAME + ", " + controller.getName()
-                        + " will only create " + tokenSlots + " tokens."
+                                + " will only create " + tokenSlots + " tokens."
                 );
                 Iterator<Map.Entry<Token, Integer>> it = event.getTokens().entrySet().iterator();
                 while (it.hasNext() && amountToRemove > 0) {
@@ -201,6 +231,14 @@ public abstract class TokenImpl extends MageObjectImpl implements Token {
                 }
             }
             putOntoBattlefieldHelper(event, game, source, tapped, attacking, attackedPlayer, created);
+            event.getTokens()
+                    .keySet()
+                    .stream()
+                    .map(Token::getLastAddedTokenIds)
+                    .flatMap(Collection::stream)
+                    .distinct()
+                    .filter(uuid -> !this.lastAddedTokenIds.contains(uuid))
+                    .forEach(this.lastAddedTokenIds::add);
             return true;
         }
         return false;
@@ -256,7 +294,6 @@ public abstract class TokenImpl extends MageObjectImpl implements Token {
                 // keep tokens ids
                 if (token instanceof TokenImpl) {
                     ((TokenImpl) token).lastAddedTokenIds.add(permanent.getId());
-                    ((TokenImpl) token).lastAddedTokenId = permanent.getId();
                 }
 
                 // created token events
@@ -312,7 +349,7 @@ public abstract class TokenImpl extends MageObjectImpl implements Token {
 
                     // select new target
                     auraTarget.setNotTarget(true);
-                    if (!controller.choose(auraOutcome, auraTarget, source.getSourceId(), game)) {
+                    if (!controller.choose(auraOutcome, auraTarget, source, game)) {
                         break;
                     }
                     UUID targetId = auraTarget.getFirstTarget();

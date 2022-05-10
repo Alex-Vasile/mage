@@ -38,7 +38,7 @@ public final class GrevenPredatorCaptain extends CardImpl {
         this.toughness = new MageInt(5);
 
         // Menace
-        this.addAbility(new MenaceAbility());
+        this.addAbility(new MenaceAbility(false));
 
         // Greven, Predator Captain gets +X/+0, where X is the amount of life you've lost this turn.
         this.addAbility(new SimpleStaticAbility(new BoostSourceEffect(
@@ -113,7 +113,7 @@ class GrevenPredatorCaptainEffect extends OneShotEffect {
         TargetPermanent target = new TargetPermanent(
                 0, 1, StaticFilters.FILTER_CONTROLLED_ANOTHER_CREATURE, true
         );
-        if (!player.choose(outcome, target, source.getSourceId(), game)) {
+        if (!player.choose(outcome, target, source, game)) {
             return false;
         }
         Permanent permanent = game.getPermanent(target.getFirstTarget());

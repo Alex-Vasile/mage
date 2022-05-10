@@ -35,7 +35,7 @@ public final class AscentOfTheWorthy extends CardImpl {
         this.subtype.add(SubType.SAGA);
 
         // (As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
-        SagaAbility sagaAbility = new SagaAbility(this, SagaChapter.CHAPTER_III);
+        SagaAbility sagaAbility = new SagaAbility(this);
 
         // I, II — Choose a creature you control. Until your next turn, all damage that would be dealt to creatures you control is dealt to that creature instead.
         sagaAbility.addChapterEffect(
@@ -87,10 +87,10 @@ class AscentOfTheWorthyEffect extends OneShotEffect {
         }
         TargetPermanent target = new TargetControlledCreaturePermanent();
         target.setNotTarget(true);
-        if (!target.canChoose(source.getSourceId(), source.getControllerId(), game)) {
+        if (!target.canChoose(source.getControllerId(), source, game)) {
             return false;
         }
-        player.choose(outcome, target, source.getControllerId(), game);
+        player.choose(outcome, target, source, game);
         Permanent permanent = game.getPermanent(target.getFirstTarget());
         if (permanent == null) {
             return false;

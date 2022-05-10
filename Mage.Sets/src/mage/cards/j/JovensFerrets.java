@@ -82,7 +82,7 @@ class JovensFerretsEffect extends OneShotEffect {
             BlockedAttackerWatcher watcher = game.getState().getWatcher(BlockedAttackerWatcher.class);
             if (watcher != null) {
                 List<Permanent> toTap = new ArrayList<>();
-                for (Permanent creature : game.getBattlefield().getActivePermanents(StaticFilters.FILTER_PERMANENT_CREATURE, source.getControllerId(), source.getSourceId(), game)) {
+                for (Permanent creature : game.getBattlefield().getActivePermanents(StaticFilters.FILTER_PERMANENT_CREATURE, source.getControllerId(), source, game)) {
                     if (!creature.getId().equals(source.getSourceId())) {
                         if (watcher.creatureHasBlockedAttacker(sourcePermanent, creature, game)) {
                             toTap.add(creature);
@@ -92,7 +92,7 @@ class JovensFerretsEffect extends OneShotEffect {
                 for (Permanent creature : toTap) {
                     creature.tap(source, game);
                     DontUntapInControllersNextUntapStepTargetEffect effect = new DontUntapInControllersNextUntapStepTargetEffect();
-                    effect.setTargetPointer(new FixedTarget(creature.getId()));
+                    effect.setTargetPointer(new FixedTarget(creature.getId(), game));
                     game.addEffect(effect, source);
                 }
                 return true;

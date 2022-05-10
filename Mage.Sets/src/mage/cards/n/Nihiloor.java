@@ -66,7 +66,7 @@ public final class Nihiloor extends CardImpl {
 
 class NihiloorControlEffect extends OneShotEffect {
 
-    private static final FilterPermanent filter
+    private static final FilterControlledCreaturePermanent filter
             = new FilterControlledCreaturePermanent("untapped creatured you control");
 
     static {
@@ -74,6 +74,7 @@ class NihiloorControlEffect extends OneShotEffect {
     }
 
     private static final class NihiloorPredicate implements Predicate<Permanent> {
+
         private final Permanent permanent;
         private final UUID playerId;
 
@@ -85,15 +86,16 @@ class NihiloorControlEffect extends OneShotEffect {
         @Override
         public boolean apply(Permanent input, Game game) {
             return input.isControlledBy(playerId)
+                    && input.isCreature(game)
                     && input.getPower().getValue() <= permanent.getPower().getValue();
         }
     }
 
     NihiloorControlEffect() {
         super(Outcome.Benefit);
-        staticText = "for each opponent, tap up to one untapped creature you control. When you do, " +
-                "gain control of target creature that player controls with power less than " +
-                "or equal to the tapped creature's power for as long as you control {this}";
+        staticText = "for each opponent, tap up to one untapped creature you control. When you do, "
+                + "gain control of target creature that player controls with power less than "
+                + "or equal to the tapped creature's power for as long as you control {this}";
     }
 
     private NihiloorControlEffect(final NihiloorControlEffect effect) {
@@ -118,20 +120,20 @@ class NihiloorControlEffect extends OneShotEffect {
             }
             TargetPermanent target = new TargetPermanent(0, 1, filter, true);
             target.withChooseHint("tapping a creature controlled by " + opponent.getName());
-            controller.choose(outcome, target, source.getControllerId(), game);
+            controller.choose(outcome, target, source, game);
             Permanent permanent = game.getPermanent(target.getFirstTarget());
             if (permanent == null || !permanent.tap(source, game)) {
                 continue;
             }
             FilterPermanent filter2 = new FilterPermanent(
                     "creature controlled by " + opponent.getName()
-                            + " with power " + permanent.getPower().getValue() + " or less"
+                    + " with power " + permanent.getPower().getValue() + " or less"
             );
             filter2.add(new NihiloorPredicate(permanent, playerId));
             ReflexiveTriggeredAbility ability = new ReflexiveTriggeredAbility(
                     new GainControlTargetEffect(Duration.Custom, true),
-                    false, "gain control of target creature that player controls with " +
-                    "power less than or equal to the tapped creature's power for as long as you control {this}"
+                    false, "gain control of target creature that player controls with "
+                    + "power less than or equal to the tapped creature's power for as long as you control {this}"
             );
             ability.addTarget(new TargetPermanent(filter2));
             game.fireReflexiveTriggeredAbility(ability, source);
@@ -159,7 +161,8 @@ class NihiloorLoseLifeEffect extends OneShotEffect {
 
     @Override
     public boolean apply(Game game, Ability source) {
-        Player player = game.getPlayer(game.getControllerId(getTargetPointer().getFirst(game, source)));
-        return player != null && player.loseLife(2, game, source, false) > 0;
+        Player owner = game.getPlayer(game.getOwnerId(getTargetPointer().getFirst(game, source)));
+        return owner != null
+                && owner.loseLife(2, game, source, false) > 0;
     }
 }

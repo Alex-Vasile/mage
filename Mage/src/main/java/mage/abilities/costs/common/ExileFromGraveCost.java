@@ -1,4 +1,3 @@
-
 package mage.abilities.costs.common;
 
 import mage.abilities.Ability;
@@ -33,7 +32,8 @@ public class ExileFromGraveCost extends CostImpl {
         this.addTarget(target);
         if (target.getMaxNumberOfTargets() > 1) {
             this.text = "exile "
-                    + (target.getNumberOfTargets() == 1 && target.getMaxNumberOfTargets() == Integer.MAX_VALUE ? "one or more"
+                    + (target.getNumberOfTargets() == 1
+                    && target.getMaxNumberOfTargets() == Integer.MAX_VALUE ? "one or more"
                     : ((target.getNumberOfTargets() < target.getMaxNumberOfTargets() ? "up to " : ""))
                     + CardUtil.numberToText(target.getMaxNumberOfTargets()))
                     + ' ' + target.getTargetName();
@@ -78,17 +78,22 @@ public class ExileFromGraveCost extends CostImpl {
     public boolean pay(Ability ability, Game game, Ability source, UUID controllerId, boolean noMana, Cost costToPay) {
         Player controller = game.getPlayer(controllerId);
         if (controller != null) {
-            if (targets.choose(Outcome.Exile, controllerId, source.getSourceId(), game)) {
+            if (targets.choose(Outcome.Exile, controllerId, source.getSourceId(), source, game)) {
                 for (UUID targetId : targets.get(0).getTargets()) {
                     Card card = game.getCard(targetId);
-                    if (card == null || game.getState().getZone(targetId) != Zone.GRAVEYARD) {
+                    if (card == null
+                            || game.getState().getZone(targetId) != Zone.GRAVEYARD) {
                         return false;
                     }
                     exiledCards.add(card);
                 }
                 Cards cardsToExile = new CardsImpl();
                 cardsToExile.addAll(exiledCards);
-                controller.moveCards(cardsToExile, Zone.EXILED, ability, game);
+                controller.moveCardsToExile(
+                        cardsToExile.getCards(game), source, game, true,
+                        CardUtil.getExileZoneId(game, source),
+                        CardUtil.getSourceName(game, source)
+                );
                 if (setTargetPointer) {
                     source.getEffects().setTargetPointer(new FixedTargets(cardsToExile, game));
                 }
@@ -101,7 +106,7 @@ public class ExileFromGraveCost extends CostImpl {
 
     @Override
     public boolean canPay(Ability ability, Ability source, UUID controllerId, Game game) {
-        return targets.canChoose(source.getSourceId(), controllerId, game);
+        return targets.canChoose(controllerId, source, game);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class PermanentsOnBattlefieldCount implements DynamicValue {
 
     @Override
     public int calculate(Game game, Ability sourceAbility, Effect effect) {
-        int value = game.getBattlefield().count(filter, sourceAbility.getSourceId(), sourceAbility.getControllerId(), game);
+        int value = game.getBattlefield().count(filter, sourceAbility.getControllerId(), sourceAbility, game);
         if (multiplier != null) {
             value *= multiplier;
         }
@@ -63,6 +63,6 @@ public class PermanentsOnBattlefieldCount implements DynamicValue {
 
     @Override
     public String getMessage() {
-        return filter.getMessage();
+        return multiplier == null ? "the number of " + filter.getMessage() : filter.getMessage();
     }
 }

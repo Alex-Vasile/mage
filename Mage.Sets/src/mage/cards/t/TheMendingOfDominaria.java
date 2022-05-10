@@ -32,7 +32,7 @@ public final class TheMendingOfDominaria extends CardImpl {
         this.subtype.add(SubType.SAGA);
 
         // <i>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)</i>
-        SagaAbility sagaAbility = new SagaAbility(this, SagaChapter.CHAPTER_III);
+        SagaAbility sagaAbility = new SagaAbility(this);
 
         // I, II — Put the top two cards of your library into your graveyard, then you may return a creature card from your graveyard to your hand.
         sagaAbility.addChapterEffect(this, SagaChapter.CHAPTER_I, SagaChapter.CHAPTER_II, new TheMendingOfDominariaFirstEffect());
@@ -77,9 +77,9 @@ class TheMendingOfDominariaFirstEffect extends OneShotEffect {
         new MillCardsControllerEffect(2).apply(game, source);
         TargetCardInYourGraveyard target = new TargetCardInYourGraveyard(StaticFilters.FILTER_CARD_CREATURE_YOUR_GRAVEYARD);
         target.setNotTarget(true);
-        if (target.canChoose(source.getSourceId(), source.getControllerId(), game)
+        if (target.canChoose(source.getControllerId(), source, game)
                 && controller.chooseUse(outcome, "Return a creature card from your graveyard to hand?", source, game)
-                && controller.choose(Outcome.ReturnToHand, target, source.getSourceId(), game)) {
+                && controller.choose(Outcome.ReturnToHand, target, source, game)) {
             Card card = game.getCard(target.getFirstTarget());
             if (card != null) {
                 controller.moveCards(card, Zone.HAND, source, game);
@@ -110,7 +110,7 @@ class TheMendingOfDominariaSecondEffect extends OneShotEffect {
         Player controller = game.getPlayer(source.getControllerId());
         if (controller != null) {
             controller.moveCards(
-                    controller.getGraveyard().getCards(new FilterLandCard(), source.getSourceId(), source.getControllerId(), game),
+                    controller.getGraveyard().getCards(new FilterLandCard(), source.getControllerId(), source, game),
                     Zone.BATTLEFIELD, source, game, false, false, false, null
             );
             for (Card card : controller.getGraveyard().getCards(game)) {

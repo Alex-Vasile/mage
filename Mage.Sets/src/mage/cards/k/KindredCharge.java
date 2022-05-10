@@ -66,7 +66,7 @@ class KindredChargeEffect extends OneShotEffect {
     @Override
     public boolean apply(Game game, Ability source) {
         Player controller = game.getPlayer(source.getControllerId());
-        MageObject sourceObject = game.getObject(source.getSourceId());
+        MageObject sourceObject = game.getObject(source);
         if (controller != null && sourceObject != null) {
             SubType subType = ChooseCreatureTypeEffect.getChosenCreatureType(source.getSourceId(), game);
             if (subType != null) {
@@ -77,7 +77,7 @@ class KindredChargeEffect extends OneShotEffect {
                         CreateTokenCopyTargetEffect effect = new CreateTokenCopyTargetEffect(source.getControllerId(), null, true);
                         effect.setTargetPointer(new FixedTarget(permanent, game));
                         effect.apply(game, source);
-                        for (Permanent addedToken : effect.getAddedPermanent()) {
+                        for (Permanent addedToken : effect.getAddedPermanents()) {
                             Effect exileEffect = new ExileTargetEffect();
                             exileEffect.setTargetPointer(new FixedTarget(addedToken, game));
                             game.addDelayedTriggeredAbility(new AtTheBeginOfNextEndStepDelayedTriggeredAbility(exileEffect), source);

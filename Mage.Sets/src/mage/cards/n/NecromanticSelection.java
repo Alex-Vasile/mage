@@ -1,4 +1,3 @@
-
 package mage.cards.n;
 
 import mage.MageObject;
@@ -72,11 +71,13 @@ class NecromanticSelectionEffect extends OneShotEffect {
     @Override
     public boolean apply(Game game, Ability source) {
         Player controller = game.getPlayer(source.getControllerId());
-        MageObject sourceObject = game.getObject(source.getSourceId());
-        if (sourceObject != null && controller != null) {
+        MageObject sourceObject = game.getObject(source);
+        if (sourceObject != null
+                && controller != null) {
             Cards cards = new CardsImpl();
-            for (Permanent permanent : game.getBattlefield().getActivePermanents(StaticFilters.FILTER_PERMANENT_CREATURE, controller.getId(), source.getSourceId(), game)) {
+            for (Permanent permanent : game.getBattlefield().getActivePermanents(StaticFilters.FILTER_PERMANENT_CREATURE, controller.getId(), source, game)) {
                 permanent.destroy(source, game, false);
+                game.checkStateAndTriggered(); // Meren of the Clan Nel Toth bug #8515
                 if (game.getState().getZone(permanent.getId()) == Zone.GRAVEYARD) {
                     cards.add(permanent);
                 }
@@ -88,13 +89,14 @@ class NecromanticSelectionEffect extends OneShotEffect {
             }
             filter.add(Predicates.or(cardIdPredicates));
             Target target = new TargetCardInGraveyard(filter);
-            if (controller.chooseTarget(outcome, target, source, game)) {
+            target.setNotTarget(true);
+            if (controller.chooseTarget(Outcome.Benefit, target, source, game)) {
                 Card card = game.getCard(target.getFirstTarget());
                 if (card != null) {
                     controller.moveCards(card, Zone.BATTLEFIELD, source, game);
                     ContinuousEffect effect = new BecomesBlackZombieAdditionEffect();
                     effect.setText("It's a black Zombie in addition to its other colors and types");
-                    effect.setTargetPointer(new FixedTarget(card.getId()));
+                    effect.setTargetPointer(new FixedTarget(card.getId(), game));
                     game.addEffect(effect, source);
                 }
             }

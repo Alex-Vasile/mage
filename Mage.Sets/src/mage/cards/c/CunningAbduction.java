@@ -66,7 +66,7 @@ class CunningAbductionExileEffect extends OneShotEffect {
     @Override
     public boolean apply(Game game, Ability source) {
         Player opponent = game.getPlayer(targetPointer.getFirst(game, source));
-        MageObject sourceObject = game.getObject(source.getSourceId());
+        MageObject sourceObject = game.getObject(source);
         if (opponent != null && sourceObject != null) {
             opponent.revealCards(sourceObject.getName(), opponent.getHand(), game);
             Player controller = game.getPlayer(source.getControllerId());
@@ -89,7 +89,7 @@ class CunningAbductionExileEffect extends OneShotEffect {
                     game.addEffect(effect, source);
                     // and you may spend mana as though it were mana of any color to cast it
                     effect = new CunningAbductionSpendAnyManaEffect();
-                    effect.setTargetPointer(new FixedTarget(card.getId()));
+                    effect.setTargetPointer(new FixedTarget(card.getId(), game));
                     game.addEffect(effect, source);
                 }
                 return true;

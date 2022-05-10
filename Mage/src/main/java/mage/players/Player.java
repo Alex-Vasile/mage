@@ -127,6 +127,8 @@ public interface Player extends MageItem, Copyable<Player> {
 
     void exchangeLife(Player player, Ability source, Game game);
 
+    int damage(int damage, Ability source, Game game);
+
     int damage(int damage, UUID attackerId, Ability source, Game game);
 
     int damage(int damage, UUID attackerId, Ability source, Game game, boolean combatDamage, boolean preventable);
@@ -607,9 +609,9 @@ public interface Player extends MageItem, Copyable<Player> {
 
     boolean priority(Game game);
 
-    boolean choose(Outcome outcome, Target target, UUID sourceId, Game game);
+    boolean choose(Outcome outcome, Target target, Ability source, Game game);
 
-    boolean choose(Outcome outcome, Target target, UUID sourceId, Game game, Map<String, Serializable> options);
+    boolean choose(Outcome outcome, Target target, Ability source, Game game, Map<String, Serializable> options);
 
     boolean choose(Outcome outcome, Cards cards, TargetCard target, Game game); // TODO: remove to use choose with "Ability source"
 

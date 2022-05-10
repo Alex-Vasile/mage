@@ -1,4 +1,3 @@
-
 package mage.cards.f;
 
 import java.util.UUID;
@@ -28,7 +27,7 @@ import mage.target.targetpointer.FixedTarget;
 public final class FickleEfreet extends CardImpl {
 
     public FickleEfreet(UUID ownerId, CardSetInfo setInfo) {
-        super(ownerId,setInfo,new CardType[]{CardType.CREATURE},"{3}{R}");
+        super(ownerId, setInfo, new CardType[]{CardType.CREATURE}, "{3}{R}");
         this.subtype.add(SubType.EFREET);
 
         this.power = new MageInt(5);
@@ -48,7 +47,6 @@ public final class FickleEfreet extends CardImpl {
         return new FickleEfreet(this);
     }
 }
-
 
 class FickleEfreetChangeControlEffect extends OneShotEffect {
 
@@ -74,15 +72,15 @@ class FickleEfreetChangeControlEffect extends OneShotEffect {
             if (!controller.flipCoin(source, game, true)) {
                 if (sourcePermanent != null) {
                     Target target = new TargetOpponent(true);
-                    if (target.canChoose(source.getSourceId(), controller.getId(), game)) {
-                        while (!target.isChosen() && target.canChoose(source.getSourceId(), controller.getId(), game) && controller.canRespond()) {
+                    if (target.canChoose(controller.getId(), source, game)) {
+                        while (!target.isChosen() && target.canChoose(controller.getId(), source, game) && controller.canRespond()) {
                             controller.chooseTarget(outcome, target, source, game);
                         }
                     }
                     Player chosenOpponent = game.getPlayer(target.getFirstTarget());
                     if (chosenOpponent != null) {
                         ContinuousEffect effect = new FickleEfreetGainControlEffect(Duration.Custom, target.getFirstTarget());
-                        effect.setTargetPointer(new FixedTarget(sourcePermanent.getId()));
+                        effect.setTargetPointer(new FixedTarget(sourcePermanent.getId(), game));
                         game.addEffect(effect, source);
                         game.informPlayers(chosenOpponent.getLogName() + " has gained control of " + sourcePermanent.getLogName());
                         return true;

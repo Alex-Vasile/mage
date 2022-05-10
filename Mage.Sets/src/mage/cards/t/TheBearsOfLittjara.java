@@ -34,7 +34,7 @@ public final class TheBearsOfLittjara extends CardImpl {
         this.subtype.add(SubType.SAGA);
 
         // (As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)
-        SagaAbility sagaAbility = new SagaAbility(this, SagaChapter.CHAPTER_III);
+        SagaAbility sagaAbility = new SagaAbility(this);
 
         // I — Create a 2/2 blue Shapeshifter creature token with changeling.
         sagaAbility.addChapterEffect(
@@ -93,7 +93,7 @@ class TheBearsOfLittjaraEffect extends OneShotEffect {
         }
         for (Permanent creature : game.getBattlefield().getActivePermanents(
                 StaticFilters.FILTER_CONTROLLED_CREATURE,
-                source.getControllerId(), source.getSourceId(), game
+                source.getControllerId(), source, game
         )) {
             if (creature == null) {
                 continue;

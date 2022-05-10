@@ -72,7 +72,7 @@ class ChooseACreature extends OneShotEffect {
         Player controller = game.getPlayer(source.getControllerId());
         MageObject sourceObject = game.getPermanentEntering(source.getSourceId());
         if (sourceObject == null) {
-            sourceObject = game.getObject(source.getSourceId());
+            sourceObject = game.getObject(source);
         }
         if (controller == null
                 || sourceObject == null) {
@@ -80,10 +80,10 @@ class ChooseACreature extends OneShotEffect {
         }
         Target target = new TargetCreaturePermanent();
         target.setNotTarget(true);
-        if (!target.canChoose(source.getSourceId(), controller.getId(), game)) {
+        if (!target.canChoose(controller.getId(), source, game)) {
             return true;
         }
-        controller.choose(Outcome.Copy, target, source.getSourceId(), game);
+        controller.choose(Outcome.Copy, target, source, game);
         Permanent chosenPermanent = game.getPermanent(target.getFirstTarget());
         if (chosenPermanent != null) {
             game.getState().setValue(source.getSourceId().toString() + INFO_KEY, chosenPermanent.copy());
@@ -139,8 +139,8 @@ class MetamorphicAlterationEffect extends ContinuousEffectImpl {
         for (Ability ability : copied.getAbilities()) {
             permanent.addAbility(ability, source.getSourceId(), game);
         }
-        permanent.getPower().setValue(copied.getPower().getBaseValue());
-        permanent.getToughness().setValue(copied.getToughness().getBaseValue());
+        permanent.getPower().setValue(copied.getPower().getBaseValueModified());
+        permanent.getToughness().setValue(copied.getToughness().getBaseValueModified());
         return true;
     }
 

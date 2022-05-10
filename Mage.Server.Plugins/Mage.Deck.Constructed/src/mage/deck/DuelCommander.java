@@ -36,8 +36,8 @@ public class DuelCommander extends Commander {
         banned.add("Karakas");
         banned.add("Library of Alexandria");
         banned.add("Lion's Eye Diamond");
-        banned.add("Lutri, The Spellchaser");
         banned.add("Loyal Retainers");
+        banned.add("Lutri, the Spellchaser");
         banned.add("Maddening Hex");
         banned.add("Mana Crypt");
         banned.add("Mana Drain");
@@ -92,8 +92,9 @@ public class DuelCommander extends Commander {
         bannedCommander.add("Jeska, Thrice Reborn");
         bannedCommander.add("Keleth, Sunmane Familiar");
         bannedCommander.add("Krark, the Thumbless");
+        bannedCommander.add("Kraum, Ludevic's Opus");
+        bannedCommander.add("Livio, Oathsworn Sentinel");
         bannedCommander.add("Ludevic, Necro-Alchemist");
-        bannedCommander.add("Marath, Will of the Wild");
         bannedCommander.add("Najeela, the Blade-Blossom");
         bannedCommander.add("Oloro, Ageless Ascetic");
         bannedCommander.add("Omnath, Locus of Creation");
@@ -103,7 +104,6 @@ public class DuelCommander extends Commander {
         bannedCommander.add("Rofellos, Llanowar Emissary");
         bannedCommander.add("Rograkh, Son of Rohgahh");
         bannedCommander.add("Tasigur, the Golden Fang");
-        bannedCommander.add("Teferi, Temporal Archmage");
         bannedCommander.add("Thrasios, Triton Hero");
         bannedCommander.add("Tymna, the Weaver");
         bannedCommander.add("Urza, Lord High Artificer");

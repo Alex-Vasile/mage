@@ -45,7 +45,7 @@ public final class RampagingFerocidon extends CardImpl {
         this.toughness = new MageInt(3);
 
         // Menace
-        this.addAbility(new MenaceAbility());
+        this.addAbility(new MenaceAbility(false));
 
         // Players can't gain life.
         this.addAbility(new SimpleStaticAbility(Zone.BATTLEFIELD, new RampagingFerocidonEffect()));
@@ -88,7 +88,7 @@ class RampagingFerocidonEffect extends ContinuousRuleModifyingEffectImpl {
 
     @Override
     public String getInfoMessage(Ability source, GameEvent event, Game game) {
-        MageObject mageObject = game.getObject(source.getSourceId());
+        MageObject mageObject = game.getObject(source);
         Player player = game.getPlayer(event.getPlayerId());
         if (mageObject != null && player != null) {
             return player.getLogName() + " can't get " + event.getAmount() + " life (" + mageObject.getIdName() + ").";

@@ -46,7 +46,7 @@ public final class NeganTheColdBlooded extends CardImpl {
 
         // Whenever an opponent sacrifices a creature, you create a Treasure token.
         this.addAbility(new SacrificeAllTriggeredAbility(
-                new CreateTokenEffect(new TreasureToken()),
+                new CreateTokenEffect(new TreasureToken()).setText("you create a Treasure token"),
                 StaticFilters.FILTER_PERMANENT_A_CREATURE,
                 TargetController.OPPONENT, false
         ));
@@ -90,16 +90,16 @@ class NeganTheColdBloodedEffect extends OneShotEffect {
         filter.add(new ControllerIdPredicate(opponent.getId()));
         TargetPermanent target = new TargetPermanent(filter);
         target.setNotTarget(true);
-        if (!target.canChoose(source.getSourceId(), source.getControllerId(), game)) {
+        if (!target.canChoose(source.getControllerId(), source, game)) {
             return false;
         }
         Set<UUID> choices = new HashSet<>();
-        controller.choose(Outcome.DestroyPermanent, target, source.getSourceId(), game);
+        controller.choose(Outcome.DestroyPermanent, target, source, game);
         UUID controllerChoice = target.getFirstTarget();
         choices.add(controllerChoice);
 
         target.clearChosen();
-        opponent.choose(Outcome.DestroyPermanent, target, source.getSourceId(), game);
+        opponent.choose(Outcome.DestroyPermanent, target, source, game);
         UUID opponentChoice = target.getFirstTarget();
         choices.add(opponentChoice);
 

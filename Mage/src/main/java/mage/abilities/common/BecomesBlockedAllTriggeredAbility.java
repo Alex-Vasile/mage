@@ -19,7 +19,7 @@ public class BecomesBlockedAllTriggeredAbility extends TriggeredAbilityImpl {
     private final boolean setTargetPointer;
 
     public BecomesBlockedAllTriggeredAbility(Effect effect, boolean optional) {
-        this(effect, optional, StaticFilters.FILTER_PERMANENT_CREATURE_A, false);
+        this(effect, optional, StaticFilters.FILTER_PERMANENT_A_CREATURE, false);
     }
 
     public BecomesBlockedAllTriggeredAbility(Effect effect, boolean optional, FilterCreaturePermanent filter, boolean setTargetPointer) {
@@ -42,7 +42,7 @@ public class BecomesBlockedAllTriggeredAbility extends TriggeredAbilityImpl {
     @Override
     public boolean checkTrigger(GameEvent event, Game game) {
         Permanent permanent = game.getPermanent(event.getTargetId());
-        if (filter.match(permanent, getSourceId(), getControllerId(), game)) {
+        if (filter.match(permanent, getControllerId(), this, game)) {
             if (setTargetPointer) {
                 this.getEffects().setTargetPointer(new FixedTarget(event.getTargetId(), game));
             }

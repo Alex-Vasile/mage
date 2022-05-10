@@ -37,7 +37,6 @@ public final class CreepingInn extends CardImpl {
         this.power = new MageInt(3);
         this.toughness = new MageInt(7);
         this.color.setBlack(true);
-        this.transformable = true;
         this.nightCard = true;
 
         // Whenever Creeping Inn attacks, you may exile a creature card from your graveyard.
@@ -46,7 +45,7 @@ public final class CreepingInn extends CardImpl {
         this.addAbility(new AttacksTriggeredAbility(new CreepingInnEffect()));
 
         // {4}: Creeping Inn phases out.
-        this.addAbility(new SimpleActivatedAbility(Zone.BATTLEFIELD, new PhaseOutSourceEffect(), new ManaCostsImpl("{4}")));
+        this.addAbility(new SimpleActivatedAbility(Zone.BATTLEFIELD, new PhaseOutSourceEffect(), new ManaCostsImpl<>("{4}")));
     }
 
     private CreepingInn(final CreepingInn card) {
@@ -85,8 +84,8 @@ class CreepingInnEffect extends OneShotEffect {
             UUID exileId = CardUtil.getExileZoneId(game, source);
             TargetCardInGraveyard target = new TargetCardInGraveyard(0, 1, StaticFilters.FILTER_CARD_CREATURE_YOUR_GRAVEYARD);
             target.setNotTarget(true);
-            if (target.canChoose(source.getSourceId(), player.getId(), game)) {
-                if (player.choose(Outcome.Exile, target, source.getId(), game)) {
+            if (target.canChoose(player.getId(), source, game)) {
+                if (player.choose(Outcome.Exile, target, source, game)) {
                     Card cardChosen = game.getCard(target.getFirstTarget());
                     if (cardChosen != null) {
                         int lifeAmount = 0;

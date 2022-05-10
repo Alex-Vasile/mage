@@ -1,51 +1,47 @@
 package mage.cards.g;
 
+import java.util.HashSet;
+import java.util.Set;
 import mage.abilities.Ability;
 import mage.abilities.condition.common.PermanentsOnTheBattlefieldCondition;
-import mage.abilities.dynamicvalue.common.StaticValue;
 import mage.abilities.effects.ReplacementEffectImpl;
 import mage.abilities.effects.common.LookLibraryAndPickControllerEffect;
+import mage.abilities.effects.common.LookLibraryControllerEffect.PutCards;
 import mage.cards.Card;
 import mage.cards.CardImpl;
 import mage.cards.CardSetInfo;
 import mage.constants.*;
-import mage.filter.StaticFilters;
 import mage.filter.common.FilterControlledPermanent;
 import mage.game.Game;
 import mage.game.events.GameEvent;
 import mage.game.events.ZoneChangeEvent;
 import mage.players.Player;
 import java.util.UUID;
-import mage.Mana;
+import mage.MageIdentifier;
 import mage.abilities.common.SimpleStaticAbility;
 import mage.abilities.costs.mana.ManaCostsImpl;
 import mage.abilities.decorator.ConditionalAsThoughEffect;
 import mage.abilities.effects.AsThoughEffectImpl;
-import mage.watchers.common.ManaSpentToCastWatcher;
+import mage.watchers.Watcher;
 
 /**
  *
  * @author jeffwadsworth
  */
-
 public class GlimpseTheCosmos extends CardImpl {
 
     public GlimpseTheCosmos(UUID ownerId, CardSetInfo setInfo) {
         super(ownerId, setInfo, new CardType[]{CardType.SORCERY}, "{1}{U}");
 
         // Look at the top three cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order.
-        this.getSpellAbility().addEffect(new LookLibraryAndPickControllerEffect(
-                StaticValue.get(3), false, StaticValue.get(1),
-                StaticFilters.FILTER_CARD, Zone.LIBRARY, false,
-                false, false, Zone.HAND, false
-        ).setText("look at the top three cards of your library. "
-                + "Put one of them into your hand and the rest on the bottom of your library in any order"));
+        this.getSpellAbility().addEffect(new LookLibraryAndPickControllerEffect(3, 1, PutCards.HAND, PutCards.BOTTOM_ANY));
 
         //As long as you control a Giant, you may cast Glimpse the Cosmos from your graveyard by paying {U} rather than paying its mana cost. If you cast Glimpse the Cosmos this way and it would be put into your graveyard, exile it instead.
         this.addAbility(new SimpleStaticAbility(Zone.GRAVEYARD,
                 new ConditionalAsThoughEffect(
                         new GlimpseTheCosmosPlayEffect(),
-                        new PermanentsOnTheBattlefieldCondition(new FilterControlledPermanent(SubType.GIANT)))));
+                        new PermanentsOnTheBattlefieldCondition(new FilterControlledPermanent(SubType.GIANT)))).setIdentifier(MageIdentifier.GlimpseTheCosmosWatcher),
+                new GlimpseTheCosmosWatcher());
 
         this.addAbility(new SimpleStaticAbility(Zone.ALL, new GlimpseTheCosmosReplacementEffect()));
 
@@ -97,14 +93,13 @@ class GlimpseTheCosmosPlayEffect extends AsThoughEffectImpl {
         }
         return false;
     }
-
 }
 
 class GlimpseTheCosmosReplacementEffect extends ReplacementEffectImpl {
 
     public GlimpseTheCosmosReplacementEffect() {
-        super(Duration.OneUse, Outcome.Exile);
-        staticText = "As long as you control a Giant, you may cast {this} from your graveyard by paying {U} rather than paying its mana cost.  If you cast {this} this way and it would be put into your graveyard, exile it instead";
+        super(Duration.EndOfGame, Outcome.Benefit);
+        staticText = "As long as you control a Giant, you may cast {this} from your graveyard by paying {U} rather than paying its mana cost. If you cast {this} this way and it would be put into your graveyard, exile it instead";
     }
 
     public GlimpseTheCosmosReplacementEffect(final GlimpseTheCosmosReplacementEffect effect) {
@@ -127,7 +122,6 @@ class GlimpseTheCosmosReplacementEffect extends ReplacementEffectImpl {
         if (controller != null) {
             Card card = game.getCard(event.getTargetId());
             if (card != null) {
-                discard();
                 return controller.moveCards(
                         card, Zone.EXILED, source, game, false, false, false, event.getAppliedEffects());
             }
@@ -142,20 +136,45 @@ class GlimpseTheCosmosReplacementEffect extends ReplacementEffectImpl {
 
     @Override
     public boolean applies(GameEvent event, Ability source, Game game) {
-        ManaSpentToCastWatcher watcher = game.getState().getWatcher(ManaSpentToCastWatcher.class);
-        if (watcher == null) {
-            return false;
-        }
-        Mana payment = watcher.getLastManaPayment(source.getSourceId());
-        if (payment != null
-                && payment.getBlue() == 1 // must be blue mana
-                && payment.count() == 1) {  // must be just one
-            if (event.getTargetId().equals(source.getSourceId())
-                    && ((ZoneChangeEvent) event).getFromZone() == Zone.STACK
-                    && ((ZoneChangeEvent) event).getToZone() != Zone.EXILED) {
-                return true;
-            }
+        GlimpseTheCosmosWatcher watcher = game.getState().getWatcher(GlimpseTheCosmosWatcher.class);
+        if (watcher != null
+                && ((ZoneChangeEvent) event).getFromZone() == Zone.STACK
+                && ((ZoneChangeEvent) event).getToZone() == Zone.GRAVEYARD
+                && event.getTargetId().equals(source.getSourceId())
+                && watcher.isCardSource(game.getCard(source.getSourceId()))) {
+            return true;
         }
         return false;
+    }
+}
+
+class GlimpseTheCosmosWatcher extends Watcher {
+
+    private final Set<Card> sourceCards = new HashSet<>();
+
+    public GlimpseTheCosmosWatcher() {
+        super(WatcherScope.GAME);
+    }
+
+    @Override
+    public void watch(GameEvent event, Game game) {
+        if (event.getType() == GameEvent.EventType.CAST_SPELL
+                && event.hasApprovingIdentifier(MageIdentifier.GlimpseTheCosmosWatcher)) {
+            Ability approvingAbility = event.getAdditionalReference().getApprovingAbility();
+            if (approvingAbility != null
+                    && approvingAbility.getSourceId().equals(event.getSourceId())) {
+                sourceCards.add(game.getCard(event.getSourceId()));
+            }
+        }
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        sourceCards.clear();
+    }
+
+    public boolean isCardSource(Card card) {
+        return sourceCards.contains(card);
     }
 }

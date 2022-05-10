@@ -38,7 +38,6 @@ public final class StranglingGrasp extends CardImpl {
 
         this.subtype.add(SubType.AURA);
         this.color.setBlack(true);
-        this.transformable = true;
         this.nightCard = true;
 
         // Enchant creature or planeswalker an opponent controls
@@ -102,8 +101,8 @@ class StranglingGraspEffect extends OneShotEffect {
         }
         TargetPermanent target = new TargetPermanent(filter);
         target.setNotTarget(true);
-        if (target.canChoose(source.getSourceId(), player.getId(), game)) {
-            player.choose(outcome, target, source.getSourceId(), game);
+        if (target.canChoose(player.getId(), source, game)) {
+            player.choose(outcome, target, source, game);
             Permanent permanent = game.getPermanent(target.getFirstTarget());
             if (permanent != null) {
                 permanent.sacrifice(source, game);

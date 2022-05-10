@@ -32,7 +32,6 @@ public final class GrizzledAngler extends CardImpl {
         this.power = new MageInt(2);
         this.toughness = new MageInt(3);
 
-        this.transformable = true;
         this.secondSideCardClazz = GrislyAnglerfish.class;
 
         // {T}: Put the top two cards of your library into your graveyard. Then if there is a colorless creature card in your graveyard, transform Grizzled Angler.
@@ -77,8 +76,8 @@ class GrizzledAnglerEffect extends OneShotEffect {
         Player controller = game.getPlayer(source.getControllerId());
         if (controller != null) {
             controller.millCards(2, source, game);
-            if (controller.getGraveyard().count(filter, source.getSourceId(), source.getControllerId(), game) >= 1) {
-                return new TransformSourceEffect(true).apply(game, source);
+            if (controller.getGraveyard().count(filter, source.getControllerId(), source, game) >= 1) {
+                return new TransformSourceEffect().apply(game, source);
             }
         }
         return false;

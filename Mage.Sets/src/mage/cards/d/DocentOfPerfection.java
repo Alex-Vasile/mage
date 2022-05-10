@@ -45,7 +45,6 @@ public final class DocentOfPerfection extends CardImpl {
         this.power = new MageInt(5);
         this.toughness = new MageInt(4);
 
-        this.transformable = true;
         this.secondSideCardClazz = mage.cards.f.FinalIteration.class;
 
         // Flying
@@ -97,8 +96,8 @@ class DocentOfPerfectionEffect extends OneShotEffect {
     public boolean apply(Game game, Ability source) {
         Player controller = game.getPlayer(source.getControllerId());
         if (controller != null) {
-            if (game.getBattlefield().count(filter, source.getSourceId(), source.getControllerId(), game) >= 3) {
-                return new TransformSourceEffect(true).apply(game, source);
+            if (game.getBattlefield().count(filter, source.getControllerId(), source, game) >= 3) {
+                return new TransformSourceEffect().apply(game, source);
             }
         }
         return false;

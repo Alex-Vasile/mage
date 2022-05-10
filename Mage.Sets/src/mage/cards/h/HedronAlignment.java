@@ -37,7 +37,7 @@ public final class HedronAlignment extends CardImpl {
         // At the beginning of your upkeep, you may reveal your hand. If you do, you win the game if you own a card named Hedron Alignment in exile, in your hand, in your graveyard, and on the battlefield.
         this.addAbility(new BeginningOfUpkeepTriggeredAbility(new HedronAlignmentEffect(), TargetController.YOU, true));
         // {1}{U}: Scry 1.
-        this.addAbility(new SimpleActivatedAbility(Zone.BATTLEFIELD, new ScryEffect(1), new ManaCostsImpl("{1}{U}")));
+        this.addAbility(new SimpleActivatedAbility(Zone.BATTLEFIELD, new ScryEffect(1, false), new ManaCostsImpl("{1}{U}")));
     }
 
     private HedronAlignment(final HedronAlignment card) {
@@ -87,15 +87,15 @@ class HedronAlignmentEffect extends OneShotEffect {
             if (!game.getBattlefield().contains(filterPermanent, source, game, 1)) {
                 return true;
             }
-            if (controller.getHand().getCards(filterCard, source.getSourceId(), controller.getId(), game).isEmpty()) {
+            if (controller.getHand().getCards(filterCard, controller.getId(), source, game).isEmpty()) {
                 return true;
             }
-            if (controller.getGraveyard().getCards(filterCard, source.getSourceId(), controller.getId(), game).isEmpty()) {
+            if (controller.getGraveyard().getCards(filterCard, controller.getId(), source, game).isEmpty()) {
                 return true;
             }
             Cards cardsToCheck = new CardsImpl();
             cardsToCheck.addAll(game.getExile().getAllCards(game));
-            if (cardsToCheck.count(filterCard, source.getSourceId(), controller.getId(), game) == 0) {
+            if (cardsToCheck.count(filterCard, controller.getId(), source, game) == 0) {
                 return true;
             }
             controller.won(game);

@@ -1,4 +1,3 @@
-
 package mage.cards.g;
 
 import java.util.*;
@@ -22,7 +21,6 @@ import mage.game.ExileZone;
 import mage.game.Game;
 import mage.game.combat.CombatGroup;
 import mage.game.events.GameEvent;
-import mage.game.events.GameEvent.EventType;
 import mage.game.permanent.Permanent;
 import mage.players.Player;
 import mage.target.common.TargetCreaturePermanent;
@@ -109,7 +107,7 @@ class GodsendTriggeredAbility extends TriggeredAbilityImpl {
                 if (!possibleTargets.isEmpty()) {
                     this.getTargets().clear();
                     if (possibleTargets.size() == 1) {
-                        this.getEffects().get(0).setTargetPointer(new FixedTarget(possibleTargets.iterator().next()));
+                        this.getEffects().get(0).setTargetPointer(new FixedTarget(possibleTargets.iterator().next(), game));
                     } else {
                         this.getEffects().get(0).setTargetPointer(new FirstTargetPointer());
                         targetName = targetName + " equipped by " + equipment.getName();
@@ -183,7 +181,7 @@ class GodsendRuleModifyingEffect extends ContinuousRuleModifyingEffectImpl {
 
     @Override
     public String getInfoMessage(Ability source, GameEvent event, Game game) {
-        MageObject mageObject = game.getObject(source.getSourceId());
+        MageObject mageObject = game.getObject(source);
         if (mageObject != null) {
             return "You can't cast this spell because a card with the same name is exiled by " + mageObject.getLogName() + '.';
         }

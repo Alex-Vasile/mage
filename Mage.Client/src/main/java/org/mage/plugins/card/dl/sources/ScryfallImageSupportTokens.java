@@ -637,6 +637,211 @@ public class ScryfallImageSupportTokens {
             put("AFR/Emblem Zariel, Archduke of Avernus", "https://api.scryfall.com/cards/tafr/19/en?format=image");
             put("AFR/Zombie", "https://api.scryfall.com/cards/tafr/9/en?format=image");
 
+            // AFC
+            put("AFC/Angel", "https://api.scryfall.com/cards/tafc/1/en?format=image");
+            put("AFC/Beast", "https://api.scryfall.com/cards/tafc/7/en?format=image");
+            put("AFC/Clue", "https://api.scryfall.com/cards/tafc/10/en?format=image");
+            put("AFC/Dragon Spirit", "https://api.scryfall.com/cards/tafc/9/en?format=image");
+            put("AFC/Dragon", "https://api.scryfall.com/cards/tafc/6/en?format=image");
+            put("AFC/Illusion", "https://api.scryfall.com/cards/tafc/3/en?format=image");
+            put("AFC/Knight", "https://api.scryfall.com/cards/tafc/2/en?format=image");
+            put("AFC/Rat", "https://api.scryfall.com/cards/tafc/5/en?format=image");
+            put("AFC/Saproling", "https://api.scryfall.com/cards/tafc/8/en?format=image");
+            put("AFC/Servo", "https://api.scryfall.com/cards/tafc/11/en?format=image");
+            put("AFC/Thopter", "https://api.scryfall.com/cards/tafc/12/en?format=image");
+
+            // MIC
+            put("MIC/Beast", "https://api.scryfall.com/cards/tmic/7/en?format=image");
+            put("MIC/Centaur", "https://api.scryfall.com/cards/tmic/8/en?format=image");
+            put("MIC/Eldrazi Spawn", "https://api.scryfall.com/cards/tmic/1/en?format=image");
+            put("MIC/Elephant", "https://api.scryfall.com/cards/tmic/9/en?format=image");
+            put("MIC/Human Soldier", "https://api.scryfall.com/cards/tmic/2/en?format=image");
+            put("MIC/Knight", "https://api.scryfall.com/cards/tmic/3/en?format=image");
+            put("MIC/Rhino", "https://api.scryfall.com/cards/tmic/10/en?format=image");
+            put("MIC/Snake", "https://api.scryfall.com/cards/tmic/11/en?format=image");
+            put("MIC/Zombie Army", "https://api.scryfall.com/cards/tmic/6/en?format=image");
+            put("MIC/Zombie/1", "https://api.scryfall.com/cards/tmic/5/en?format=image"); // 2/2
+            put("MIC/Zombie/2", "https://api.scryfall.com/cards/tmic/4/en?format=image"); // */*
+
+            // MID
+            put("MID/Bat", "https://api.scryfall.com/cards/tmid/4/en?format=image");
+            put("MID/Beast", "https://api.scryfall.com/cards/tmid/8/en?format=image");
+            put("MID/Bird", "https://api.scryfall.com/cards/tmid/3/en?format=image");
+            put("MID/Clue", "https://api.scryfall.com/cards/tmid/16/en?format=image");
+            put("MID/Devil", "https://api.scryfall.com/cards/tmid/6/en?format=image");
+            put("MID/Elemental", "https://api.scryfall.com/cards/tmid/7/en?format=image");
+            put("MID/Human", "https://api.scryfall.com/cards/tmid/1/en?format=image");
+            put("MID/Insect", "https://api.scryfall.com/cards/tmid/9/en?format=image");
+            put("MID/Ooze", "https://api.scryfall.com/cards/tmid/10/en?format=image");
+            put("MID/Spider", "https://api.scryfall.com/cards/tmid/11/en?format=image");
+            put("MID/Spirit", "https://api.scryfall.com/cards/tmid/2/en?format=image");
+            put("MID/Emblem Teferi, Who Slows the Sunset", "https://api.scryfall.com/cards/tmid/17/en?format=image");
+            put("MID/Treefolk", "https://api.scryfall.com/cards/tmid/12/en?format=image");
+            put("MID/Vampire", "https://api.scryfall.com/cards/tmid/14/en?format=image");
+            put("MID/Wolf", "https://api.scryfall.com/cards/tmid/13/en?format=image");
+            put("MID/Emblem Wrenn and Seven", "https://api.scryfall.com/cards/tmid/18/en?format=image");
+            put("MID/Zombie/1", "https://api.scryfall.com/cards/tmid/5/en?format=image"); // decayed
+            put("MID/Zombie/2", "https://api.scryfall.com/cards/tmid/15/en?format=image"); // menace
+
+            // VOC
+            put("VOC/Angel", "https://api.scryfall.com/cards/tvoc/2/en?format=image");
+            put("VOC/Bat", "https://api.scryfall.com/cards/tvoc/4/en?format=image");
+            put("VOC/Clue", "https://api.scryfall.com/cards/tvoc/5/en?format=image");
+            put("VOC/Spirit/1", "https://api.scryfall.com/cards/tvoc/1/en?format=image"); // 1/1
+            put("VOC/Spirit/2", "https://api.scryfall.com/cards/tvoc/3/en?format=image"); // 3/3
+            put("VOC/Thopter", "https://api.scryfall.com/cards/tvoc/6/en?format=image");
+
+            // VOW
+            put("VOW/Blood", "https://api.scryfall.com/cards/tvow/17/en?format=image");
+            put("VOW/Boar", "https://api.scryfall.com/cards/tvow/12/en?format=image");
+            put("VOW/Emblem Chandra, Dressed to Kill", "https://api.scryfall.com/cards/tvow/20/en?format=image");
+            put("VOW/Dragon Illusion", "https://api.scryfall.com/cards/tvow/9/en?format=image");
+            put("VOW/Human Soldier", "https://api.scryfall.com/cards/tvow/15/en?format=image");
+            put("VOW/Human/1", "https://api.scryfall.com/cards/tvow/10/en?format=image"); // red
+            put("VOW/Human/2", "https://api.scryfall.com/cards/tvow/1/en?format=image"); // white
+            put("VOW/Insect", "https://api.scryfall.com/cards/tvow/13/en?format=image");
+            put("VOW/Slug", "https://api.scryfall.com/cards/tvow/6/en?format=image");
+            put("VOW/Spirit Cleric", "https://api.scryfall.com/cards/tvow/4/en?format=image");
+            put("VOW/Spirit/1", "https://api.scryfall.com/cards/tvow/2/en?format=image"); // 1/1
+            put("VOW/Spirit/2", "https://api.scryfall.com/cards/tvow/3/en?format=image"); // 4/4
+            put("VOW/Treasure", "https://api.scryfall.com/cards/tvow/18/en?format=image");
+            put("VOW/Vampire/1", "https://api.scryfall.com/cards/tvow/16/en?format=image"); // lifelink
+            put("VOW/Vampire/2", "https://api.scryfall.com/cards/tvow/7/en?format=image"); // flying, lifelink
+            put("VOW/Wolf/1", "https://api.scryfall.com/cards/tvow/14/en?format=image"); // green
+            put("VOW/Wolf/2", "https://api.scryfall.com/cards/tvow/11/en?format=image"); // red
+            put("VOW/Zombie/1", "https://api.scryfall.com/cards/tvow/8/en?format=image"); // 2/2
+            put("VOW/Zombie/2", "https://api.scryfall.com/cards/tvow/5/en?format=image"); // */*
+
+            // UMA
+            put ("UMA/Citizen", "https://api.scryfall.com/cards/tuma/1/en?format=image");
+            put ("UMA/Drake", "https://api.scryfall.com/cards/tuma/3/en?format=image");
+            put ("UMA/Elemental/1", "https://api.scryfall.com/cards/tuma/13/en?format=image"); // green
+            put ("UMA/Elemental/2", "https://api.scryfall.com/cards/tuma/9/en?format=image");
+            put ("UMA/Elemental/3", "https://api.scryfall.com/cards/tuma/10/en?format=image");
+            put ("UMA/Faerie Rogue", "https://api.scryfall.com/cards/tuma/5/en?format=image");
+            put ("UMA/Homunculus", "https://api.scryfall.com/cards/tuma/4/en?format=image");
+            put ("UMA/Marit Lage", "https://api.scryfall.com/cards/tuma/6/en?format=image");
+            put ("UMA/Ooze", "https://api.scryfall.com/cards/tuma/14/en?format=image");
+            put ("UMA/Soldier", "https://api.scryfall.com/cards/tuma/11/en?format=image");
+            put ("UMA/Spark Elemental", "https://api.scryfall.com/cards/tuma/12/en?format=image");
+            put ("UMA/Spider", "https://api.scryfall.com/cards/tuma/15/en?format=image");
+            put ("UMA/Spirit/1", "https://api.scryfall.com/cards/tuma/2/en?format=image"); // white
+            put ("UMA/Spirit/2", "https://api.scryfall.com/cards/tuma/16/en?format=image"); // white, black
+            put ("UMA/Wurm", "https://api.scryfall.com/cards/tuma/7/en?format=image");
+            put ("UMA/Zombie", "https://api.scryfall.com/cards/tuma/8/en?format=image");
+
+            // MMA
+            put ("MMA/Bat", "https://api.scryfall.com/cards/tmma/5/en?format=image");
+            put ("MMA/Dragon", "https://api.scryfall.com/cards/tmma/9/en?format=image");
+            put ("MMA/Elemental", "https://api.scryfall.com/cards/tmma/11/en?format=image");
+            put ("MMA/Emblem Elspeth, Knight Errant", "https://api.scryfall.com/cards/tmma/16/en?format=image");
+            put ("MMA/Faerie Rogue", "https://api.scryfall.com/cards/tmma/14/en?format=image");
+            put ("MMA/Giant Warrior", "https://api.scryfall.com/cards/tmma/1/en?format=image");
+            put ("MMA/Goblin", "https://api.scryfall.com/cards/tmma/10/en?format=image");
+            put ("MMA/Goblin Rogue", "https://api.scryfall.com/cards/tmma/6/en?format=image");
+            put ("MMA/Illusion", "https://api.scryfall.com/cards/tmma/4/en?format=image");
+            put ("MMA/Kithkin Soldier", "https://api.scryfall.com/cards/tmma/2/en?format=image");
+            put ("MMA/Saproling", "https://api.scryfall.com/cards/tmma/12/en?format=image");
+            put ("MMA/Soldier", "https://api.scryfall.com/cards/tmma/3/en?format=image");
+            put ("MMA/Spider", "https://api.scryfall.com/cards/tmma/7/en?format=image");
+            put ("MMA/Treefolk Shaman", "https://api.scryfall.com/cards/tmma/13/en?format=image");
+            put ("MMA/Worm", "https://api.scryfall.com/cards/tmma/15/en?format=image");
+            put ("MMA/Zombie", "https://api.scryfall.com/cards/tmma/8/en?format=image");
+
+            // SHM
+            put ("SHM/Elemental/1", "https://api.scryfall.com/cards/tshm/9/en?format=image"); // black, red
+            put ("SHM/Elemental/2", "https://api.scryfall.com/cards/tshm/4/en?format=image"); // haste
+            put ("SHM/Elf Warrior/1", "https://api.scryfall.com/cards/tshm/5/en?format=image"); // green
+            put ("SHM/Elf Warrior/2", "https://api.scryfall.com/cards/tshm/12/en?format=image"); // white, green
+            put ("SHM/Faerie Rogue", "https://api.scryfall.com/cards/tshm/8/en?format=image");
+            put ("SHM/Giant Warrior", "https://api.scryfall.com/cards/tshm/10/en?format=image");
+            put ("SHM/Goblin Warrior", "https://api.scryfall.com/cards/tshm/11/en?format=image");
+            put ("SHM/Kithkin Soldier", "https://api.scryfall.com/cards/tshm/1/en?format=image");
+            put ("SHM/Rat", "https://api.scryfall.com/cards/tshm/3/en?format=image");
+            put ("SHM/Spider", "https://api.scryfall.com/cards/tshm/6/en?format=image");
+            put ("SHM/Spirit", "https://api.scryfall.com/cards/tshm/2/en?format=image");
+            put ("SHM/Wolf", "https://api.scryfall.com/cards/tshm/7/en?format=image");
+
+            // NEO
+            put ("NEO/Construct/1", "https://api.scryfall.com/cards/tneo/15/en?format=image"); // 1/1
+            put ("NEO/Construct/2", "https://api.scryfall.com/cards/tneo/6/en?format=image"); // haste
+            put ("NEO/Dragon Spirit", "https://api.scryfall.com/cards/tneo/7/en?format=image");
+            put ("NEO/Goblin Shaman", "https://api.scryfall.com/cards/tneo/8/en?format=image");
+            put ("NEO/Human Monk", "https://api.scryfall.com/cards/tneo/10/en?format=image");
+            put ("NEO/Emblem Kaito Shizuki", "https://api.scryfall.com/cards/tneo/18/en?format=image");
+            put ("NEO/Keimi", "https://api.scryfall.com/cards/tneo/13/en?format=image");
+            put ("NEO/Mechtitan", "https://api.scryfall.com/cards/tneo/14/en?format=image");
+            put ("NEO/Ninja", "https://api.scryfall.com/cards/tneo/4/en?format=image");
+            put ("NEO/Pilot", "https://api.scryfall.com/cards/tneo/1/en?format=image");
+            put ("NEO/Rat Rogue", "https://api.scryfall.com/cards/tneo/5/en?format=image");
+            put ("NEO/Samurai", "https://api.scryfall.com/cards/tneo/3/en?format=image");
+            put ("NEO/Spirit/1", "https://api.scryfall.com/cards/tneo/2/en?format=image"); // colorless
+            put ("NEO/Spirit/2", "https://api.scryfall.com/cards/tneo/12/en?format=image"); // */*
+            put ("NEO/Spirit/3", "https://api.scryfall.com/cards/tneo/11/en?format=image"); // green
+            put ("NEO/Spirit/4", "https://api.scryfall.com/cards/tneo/9/en?format=image"); // red
+            put ("NEO/Tamiyo's Notebook", "https://api.scryfall.com/cards/tneo/16/en?format=image");
+            put ("NEO/Emblem Tezzeret, Betrayer of Flesh", "https://api.scryfall.com/cards/tneo/19/en?format=image");
+            put ("NEO/Treasure", "https://api.scryfall.com/cards/tneo/17/en?format=image");
+
+            // NEC
+            put ("NEC/Angel", "https://api.scryfall.com/cards/tnec/2/en?format=image");
+            put ("NEC/Beast", "https://api.scryfall.com/cards/tnec/7/en?format=image");
+            put ("NEC/Elemental", "https://api.scryfall.com/cards/tnec/4/en?format=image");
+            put ("NEC/Elephant", "https://api.scryfall.com/cards/tnec/8/en?format=image");
+            put ("NEC/Goblin", "https://api.scryfall.com/cards/tnec/5/en?format=image");
+            put ("NEC/Myr", "https://api.scryfall.com/cards/tnec/11/en?format=image");
+            put ("NEC/Phyrexian Germ", "https://api.scryfall.com/cards/tnec/3/en?format=image");
+            put ("NEC/Plant", "https://api.scryfall.com/cards/tnec/9/en?format=image");
+            put ("NEC/Saproling", "https://api.scryfall.com/cards/tnec/10/en?format=image");
+            put ("NEC/Shrine", "https://api.scryfall.com/cards/tnec/1/en?format=image");
+            put ("NEC/Smoke Blessing", "https://api.scryfall.com/cards/tnec/6/en?format=image");
+            put ("NEC/Thopter", "https://api.scryfall.com/cards/tnec/12/en?format=image");
+
+            // SLD
+            put ("SLD/Clue", "https://api.scryfall.com/cards/sld/348/en?format=image");
+            put ("SLD/Faerie Rogue/1", "https://api.scryfall.com/cards/sld/13/en?format=image");
+            put ("SLD/Faerie Rogue/2", "https://api.scryfall.com/cards/sld/14/en?format=image");
+            put ("SLD/Faerie Rogue/3", "https://api.scryfall.com/cards/sld/15/en?format=image");
+            put ("SLD/Faerie Rogue/4", "https://api.scryfall.com/cards/sld/16/en?format=image");
+            put ("SLD/Treasure", "https://api.scryfall.com/cards/sld/153/en?format=image");
+            put ("SLD/Walker/1", "https://api.scryfall.com/cards/sld/148/en?format=image");
+            put ("SLD/Walker/2", "https://api.scryfall.com/cards/sld/149/en?format=image");
+            put ("SLD/Walker/3", "https://api.scryfall.com/cards/sld/150/en?format=image");
+            put ("SLD/Walker/4", "https://api.scryfall.com/cards/sld/151/en?format=image");
+            put ("SLD/Walker/5", "https://api.scryfall.com/cards/sld/152/en?format=image");
+
+            // 2XM
+            put ("2XM/Angel", "https://api.scryfall.com/cards/t2xm/3/en?format=image");
+            put ("2XM/Ape", "https://api.scryfall.com/cards/t2xm/12/en?format=image");
+            put ("2XM/Beast", "https://api.scryfall.com/cards/t2xm/13/en?format=image");
+            put ("2XM/Cat", "https://api.scryfall.com/cards/t2xm/4/en?format=image");
+            put ("2XM/Clue", "https://api.scryfall.com/cards/t2xm/22/en?format=image");
+            put ("2XM/Demon", "https://api.scryfall.com/cards/t2xm/9/en?format=image");
+            put ("2XM/Eldrazi Spawn", "https://api.scryfall.com/cards/t2xm/1/en?format=image");
+            put ("2XM/Elemental", "https://api.scryfall.com/cards/t2xm/20/en?format=image");
+            put ("2XM/Elephant", "https://api.scryfall.com/cards/t2xm/14/en?format=image");
+            put ("2XM/Elf Warrior", "https://api.scryfall.com/cards/t2xm/21/en?format=image");
+            put ("2XM/Phyrexian Germ", "https://api.scryfall.com/cards/t2xm/10/en?format=image");
+            put ("2XM/Golem", "https://api.scryfall.com/cards/t2xm/23/en?format=image");
+            put ("2XM/Human Soldier", "https://api.scryfall.com/cards/t2xm/5/en?format=image");
+            put ("2XM/Marit Lage", "https://api.scryfall.com/cards/t2xm/11/en?format=image");
+            put ("2XM/Myr", "https://api.scryfall.com/cards/t2xm/24/en?format=image");
+            put ("2XM/Phyrexian Myr", "https://api.scryfall.com/cards/t2xm/7/en?format=image");
+            put ("2XM/Ooze", "https://api.scryfall.com/cards/t2xm/15/en?format=image");
+            put ("2XM/Plant", "https://api.scryfall.com/cards/t2xm/16/en?format=image");
+            put ("2XM/Saproling", "https://api.scryfall.com/cards/t2xm/17/en?format=image");
+            put ("2XM/Servo", "https://api.scryfall.com/cards/t2xm/25/en?format=image");
+            put ("2XM/Shapeshifter", "https://api.scryfall.com/cards/t2xm/2/en?format=image");
+            put ("2XM/Soldier", "https://api.scryfall.com/cards/t2xm/6/en?format=image");
+            put ("2XM/Squirrel", "https://api.scryfall.com/cards/t2xm/18/en?format=image");
+            put ("2XM/Thopter/1", "https://api.scryfall.com/cards/t2xm/26/en?format=image");
+            put ("2XM/Thopter/2", "https://api.scryfall.com/cards/t2xm/8/en?format=image");
+            put ("2XM/Treasure", "https://api.scryfall.com/cards/t2xm/27/en?format=image");
+            put ("2XM/Tuktuk the Returned", "https://api.scryfall.com/cards/t2xm/28/en?format=image");
+            put ("2XM/Wolf", "https://api.scryfall.com/cards/t2xm/19/en?format=image");
+            put ("2XM/Phyrexian Wurm/1", "https://api.scryfall.com/cards/t2xm/29/en?format=image");
+            put ("2XM/Phyrexian Wurm/2", "https://api.scryfall.com/cards/t2xm/30/en?format=image");
+
             // generate supported sets
             supportedSets.clear();
             for (String cardName : this.keySet()) {

@@ -45,7 +45,6 @@ public final class JerrenCorruptedBishop extends CardImpl {
         this.subtype.add(SubType.CLERIC);
         this.power = new MageInt(2);
         this.toughness = new MageInt(3);
-        this.transformable = true;
         this.secondSideCardClazz = mage.cards.o.OrmendahlTheCorrupter.class;
 
         // Whenever Jerren, Corrupted Bishop enters the battlefield or another nontoken Human you control dies, you lose 1 life and create a 1/1 white Human creature token.
@@ -61,7 +60,7 @@ public final class JerrenCorruptedBishop extends CardImpl {
         // At the beginning of your end step, if you have exactly 13 life, you may pay {4}{B}{B}. If you do, transform Jerren.
         this.addAbility(new TransformAbility());
         this.addAbility(new BeginningOfEndStepTriggeredAbility(Zone.BATTLEFIELD, new DoIfCostPaid(
-                new TransformSourceEffect(true), new ManaCostsImpl<>("{4}{B}{B}")
+                new TransformSourceEffect(), new ManaCostsImpl<>("{4}{B}{B}")
         ), TargetController.YOU, JerrenCorruptedBishopCondition.instance, false));
     }
 
@@ -116,7 +115,7 @@ class JerrenCorruptedBishopTriggeredAbility extends TriggeredAbilityImpl {
     public boolean checkTrigger(GameEvent event, Game game) {
         switch (event.getType()) {
             case ENTERS_THE_BATTLEFIELD:
-                return event.getSourceId().equals(getSourceId());
+                return event.getTargetId().equals(getSourceId());
             case ZONE_CHANGE:
                 ZoneChangeEvent zEvent = (ZoneChangeEvent) event;
                 return zEvent.isDiesEvent()

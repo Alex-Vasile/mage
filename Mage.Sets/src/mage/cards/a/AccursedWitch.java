@@ -30,7 +30,6 @@ public final class AccursedWitch extends CardImpl {
         this.power = new MageInt(4);
         this.toughness = new MageInt(2);
 
-        this.transformable = true;
         this.secondSideCardClazz = mage.cards.i.InfectiousCurse.class;
 
         // Spells your opponents cast that target Accursed Witch cost {1} less to cast.
@@ -85,8 +84,7 @@ class AccursedWitchReturnTransformedEffect extends OneShotEffect {
         }
 
         game.getState().setValue(TransformAbility.VALUE_KEY_ENTER_TRANSFORMED + source.getSourceId(), Boolean.TRUE);
-        UUID secondFaceId = card.getSecondCardFace().getId();
-        game.getState().setValue("attachTo:" + secondFaceId, attachTo.getId());
+        game.getState().setValue("attachTo:" + source.getSourceId(), attachTo.getId());
         if (controller.moveCards(card, Zone.BATTLEFIELD, source, game)) {
             attachTo.addAttachment(card.getId(), source, game);
         }

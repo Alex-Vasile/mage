@@ -74,9 +74,9 @@ class CrashingBoarsEffect extends OneShotEffect {
         Player defendingPlayer = game.getPlayer(this.getTargetPointer().getFirst(game, source));
         if (defendingPlayer != null) {
             Target target = new TargetControlledCreaturePermanent(1, 1, filter, true);
-            if (target.choose(Outcome.Neutral, defendingPlayer.getId(), source.getSourceId(), game)) {
+            if (target.choose(Outcome.Neutral, defendingPlayer.getId(), source.getSourceId(), source, game)) {
                 RequirementEffect effect = new MustBeBlockedByTargetSourceEffect();
-                effect.setTargetPointer(new FixedTarget(target.getFirstTarget()));
+                effect.setTargetPointer(new FixedTarget(target.getFirstTarget(), game));
                 game.addEffect(effect, source);
             }
             return true;

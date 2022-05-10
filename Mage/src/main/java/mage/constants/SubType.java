@@ -39,6 +39,7 @@ public enum SubType {
     SHARD("Shard", SubTypeSet.EnchantmentType),
     SHRINE("Shrine", SubTypeSet.EnchantmentType),
     // 205.3g: Artifacts have their own unique set of subtypes; these subtypes are called artifact types.
+    BLOOD("Blood", SubTypeSet.ArtifactType),
     CLUE("Clue", SubTypeSet.ArtifactType),
     CONTRAPTION("Contraption", SubTypeSet.ArtifactType),
     EQUIPMENT("Equipment", SubTypeSet.ArtifactType),
@@ -170,6 +171,7 @@ public enum SubType {
     GRAVEBORN("Graveborn", SubTypeSet.CreatureType),
     GREMLIN("Gremlin", SubTypeSet.CreatureType),
     GRIFFIN("Griffin", SubTypeSet.CreatureType),
+    GUEST("Guest", SubTypeSet.CreatureType),
     GUNGAN("Gungan", SubTypeSet.CreatureType, true), // Star Wars
     // H
     HAG("Hag", SubTypeSet.CreatureType),
@@ -291,6 +293,7 @@ public enum SubType {
     QUARREN("Quarren", SubTypeSet.CreatureType, true), // Star Wars
     // R
     RABBIT("Rabbit", SubTypeSet.CreatureType),
+    RACCOON("Raccoon", SubTypeSet.CreatureType),
     RAIDER("Raider", SubTypeSet.CreatureType, true), // Star Wars
     RANGER("Ranger", SubTypeSet.CreatureType),
     RAT("Rat", SubTypeSet.CreatureType),
@@ -425,6 +428,7 @@ public enum SubType {
     HUATLI("Huatli", SubTypeSet.PlaneswalkerType),
     JACE("Jace", SubTypeSet.PlaneswalkerType),
     JESKA("Jeska", SubTypeSet.PlaneswalkerType),
+    KAITO("Kaito", SubTypeSet.PlaneswalkerType),
     KARN("Karn", SubTypeSet.PlaneswalkerType),
     KASMINA("Kasmina", SubTypeSet.PlaneswalkerType),
     KAYA("Kaya", SubTypeSet.PlaneswalkerType),
@@ -433,6 +437,7 @@ public enum SubType {
     LILIANA("Liliana", SubTypeSet.PlaneswalkerType),
     LUKKA("Lukka", SubTypeSet.PlaneswalkerType),
     LOLTH("Lolth", SubTypeSet.PlaneswalkerType),
+    MINSC("Minsc", SubTypeSet.PlaneswalkerType),
     MORDENKAINEN("Mordenkainen", SubTypeSet.PlaneswalkerType),
     NAHIRI("Nahiri", SubTypeSet.PlaneswalkerType),
     NARSET("Narset", SubTypeSet.PlaneswalkerType),

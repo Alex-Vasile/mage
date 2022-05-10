@@ -38,7 +38,7 @@ public final class TriumphOfGerrard extends CardImpl {
         this.subtype.add(SubType.SAGA);
 
         // <i>(As this Saga enters and after your draw step, add a lore counter. Sacrifice after III.)</i>
-        SagaAbility sagaAbility = new SagaAbility(this, SagaChapter.CHAPTER_III);
+        SagaAbility sagaAbility = new SagaAbility(this);
         // I, II — Put a +1/+1 counter on target creature you control with the greatest power.
         sagaAbility.addChapterEffect(
                 this,
@@ -88,7 +88,7 @@ class TriumphOfGerrardTargetCreature extends TargetControlledCreaturePermanent {
     public boolean canTarget(UUID controllerId, UUID id, Ability source, Game game) {
         if (super.canTarget(controllerId, id, source, game)) {
             int maxPower = 0;
-            for (Permanent permanent : game.getBattlefield().getActivePermanents(filter, source.getControllerId(), source.getSourceId(), game)) {
+            for (Permanent permanent : game.getBattlefield().getActivePermanents(filter, source.getControllerId(), source, game)) {
                 if (permanent.getPower().getValue() > maxPower) {
                     maxPower = permanent.getPower().getValue();
                 }
@@ -102,11 +102,11 @@ class TriumphOfGerrardTargetCreature extends TargetControlledCreaturePermanent {
     }
 
     @Override
-    public Set<UUID> possibleTargets(UUID sourceId, UUID sourceControllerId, Game game) {
+    public Set<UUID> possibleTargets(UUID sourceControllerId, Ability source, Game game) {
         int maxPower = 0;
-        List<Permanent> activePermanents = game.getBattlefield().getActivePermanents(filter, sourceControllerId, sourceId, game);
+        List<Permanent> activePermanents = game.getBattlefield().getActivePermanents(filter, sourceControllerId, source, game);
         Set<UUID> possibleTargets = new HashSet<>();
-        MageObject targetSource = game.getObject(sourceId);
+        MageObject targetSource = game.getObject(source);
         if(targetSource == null){
             return possibleTargets;
         }
@@ -126,8 +126,8 @@ class TriumphOfGerrardTargetCreature extends TargetControlledCreaturePermanent {
     }
 
     @Override
-    public boolean canChoose(UUID sourceId, UUID sourceControllerId, Game game) {
-        return !possibleTargets(sourceId, sourceControllerId, game).isEmpty();
+    public boolean canChoose(UUID sourceControllerId, Ability source, Game game) {
+        return !possibleTargets(sourceControllerId, source, game).isEmpty();
     }
 
     @Override

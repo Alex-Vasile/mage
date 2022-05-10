@@ -11,7 +11,7 @@ import mage.abilities.costs.mana.ManaCost;
 import mage.abilities.costs.mana.ManaCosts;
 import mage.abilities.keyword.BestowAbility;
 import mage.abilities.keyword.MorphAbility;
-import mage.abilities.text.TextPart;
+import mage.abilities.keyword.TransformAbility;
 import mage.cards.*;
 import mage.constants.*;
 import mage.counters.Counter;
@@ -62,25 +62,35 @@ public class Spell extends StackObjectImpl implements Card {
     private boolean countered;
     private boolean resolving = false;
     private UUID commandedBy = null; // for Word of Command
+    private int startingLoyalty;
 
     private ActivationManaAbilityStep currentActivatingManaAbilitiesStep = ActivationManaAbilityStep.BEFORE;
 
     public Spell(Card card, SpellAbility ability, UUID controllerId, Zone fromZone, Game game) {
-        this.card = card;
-        this.color = card.getColor(null).copy();
-        this.frameColor = card.getFrameColor(null).copy();
-        this.frameStyle = card.getFrameStyle();
+        Card affectedCard = card;
+
+        // TODO: must be removed after transform cards (one side) migrated to MDF engine (multiple sides)
+        if (ability.getSpellAbilityCastMode() == SpellAbilityCastMode.DISTURB && affectedCard.getSecondCardFace() != null) {
+            // simulate another side as new card (another code part in continues effect from disturb ability)
+            affectedCard = TransformAbility.transformCardSpellStatic(card, card.getSecondCardFace(), game);
+        }
+
+        this.card = affectedCard;
+        this.color = affectedCard.getColor(null).copy();
+        this.frameColor = affectedCard.getFrameColor(null).copy();
+        this.frameStyle = affectedCard.getFrameStyle();
+        this.startingLoyalty = affectedCard.getStartingLoyalty();
         this.id = ability.getId();
-        this.zoneChangeCounter = card.getZoneChangeCounter(game); // sync card's ZCC with spell (copy spell settings)
+        this.zoneChangeCounter = affectedCard.getZoneChangeCounter(game); // sync card's ZCC with spell (copy spell settings)
         this.ability = ability;
         this.ability.setControllerId(controllerId);
         if (ability.getSpellAbilityType() == SpellAbilityType.SPLIT_FUSED) {
-            spellCards.add(((SplitCard) card).getLeftHalfCard());
-            spellAbilities.add(((SplitCard) card).getLeftHalfCard().getSpellAbility().copy());
-            spellCards.add(((SplitCard) card).getRightHalfCard());
-            spellAbilities.add(((SplitCard) card).getRightHalfCard().getSpellAbility().copy());
+            spellCards.add(((SplitCard) affectedCard).getLeftHalfCard());
+            spellAbilities.add(((SplitCard) affectedCard).getLeftHalfCard().getSpellAbility().copy());
+            spellCards.add(((SplitCard) affectedCard).getRightHalfCard());
+            spellAbilities.add(((SplitCard) affectedCard).getRightHalfCard().getSpellAbility().copy());
         } else {
-            spellCards.add(card);
+            spellCards.add(affectedCard);
             spellAbilities.add(ability);
         }
         this.controllerId = controllerId;
@@ -123,6 +133,7 @@ public class Spell extends StackObjectImpl implements Card {
 
         this.currentActivatingManaAbilitiesStep = spell.currentActivatingManaAbilitiesStep;
         this.targetChanged = spell.targetChanged;
+        this.startingLoyalty = spell.startingLoyalty;
     }
 
     public boolean activate(Game game, boolean noMana) {
@@ -265,7 +276,7 @@ public class Spell extends StackObjectImpl implements Card {
                     CardUtil.copyTo(token).from(card, game, this);
                     // The token that a resolving copy of a spell becomes isn’t said to have been “created.” (2020-09-25)
                     if (token.putOntoBattlefield(1, game, ability, getControllerId(), false, false, null, false)) {
-                        permId = token.getLastAddedToken();
+                        permId = token.getLastAddedTokenIds().stream().findFirst().orElse(null);
                         flag = true;
                     } else {
                         permId = null;
@@ -646,11 +657,12 @@ public class Spell extends StackObjectImpl implements Card {
 
     @Override
     public int getStartingLoyalty() {
-        return card.getStartingLoyalty();
+        return this.startingLoyalty;
     }
 
     @Override
     public void setStartingLoyalty(int startingLoyalty) {
+        this.startingLoyalty = startingLoyalty;
     }
 
     @Override
@@ -808,20 +820,6 @@ public class Spell extends StackObjectImpl implements Card {
     }
 
     @Override
-    public void adjustCosts(Ability ability, Game game) {
-        if (card != null) {
-            card.adjustCosts(ability, game);
-        }
-    }
-
-    @Override
-    public void adjustTargets(Ability ability, Game game) {
-        if (card != null) {
-            card.adjustTargets(ability, game);
-        }
-    }
-
-    @Override
     public boolean removeFromZone(Game game, Zone fromZone, Ability source) {
         return card.removeFromZone(game, fromZone, source);
     }
@@ -904,11 +902,6 @@ public class Spell extends StackObjectImpl implements Card {
 
     @Override
     public void assignNewId() {
-        throw new UnsupportedOperationException("Unsupported operation");
-    }
-
-    @Override
-    public void setTransformable(boolean value) {
         throw new UnsupportedOperationException("Unsupported operation");
     }
 
@@ -1097,16 +1090,6 @@ public class Spell extends StackObjectImpl implements Card {
 
     @Override
     public void setIsAllCreatureTypes(Game game, boolean value) {
-    }
-
-    @Override
-    public List<TextPart> getTextParts() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public TextPart addTextPart(TextPart textPart) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

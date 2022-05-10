@@ -81,7 +81,7 @@ class GoblinGuideTriggeredAbility extends TriggeredAbilityImpl {
             if (defenderId != null) {
                 for (Effect effect : this.getEffects()) {
                     // set here because attacking creature can be removed until effect resolves
-                    effect.setTargetPointer(new FixedTarget(defenderId));
+                    effect.setTargetPointer(new FixedTarget(defenderId, game));
                 }
                 return true;
             }
@@ -119,7 +119,7 @@ class GoblinGuideEffect extends OneShotEffect {
     @Override
     public boolean apply(Game game, Ability source) {
         Player defender = game.getPlayer(getTargetPointer().getFirst(game, source));
-        MageObject sourceObject = game.getObject(source.getSourceId());
+        MageObject sourceObject = game.getObject(source);
         if (sourceObject != null && defender != null) {
             Card card = defender.getLibrary().getFromTop(game);
             if (card != null) {

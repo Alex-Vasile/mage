@@ -139,7 +139,7 @@ public class ForetellAbility extends SpecialAction {
 
                 // exile the card face-down
                 effect.setWithName(false);
-                effect.setTargetPointer(new FixedTarget(card.getId()));
+                effect.setTargetPointer(new FixedTarget(card.getId(), game));
                 effect.apply(game, source);
                 card.setFaceDown(true, game);
                 game.addEffect(new ForetellAddCostEffect(new MageObjectReference(card, game)), source);
@@ -175,7 +175,7 @@ public class ForetellAbility extends SpecialAction {
             if (affectedControllerId.equals(source.getControllerId())) {
                 Card card = game.getCard(objectId);
                 if (card != null) {
-                    MageObject sourceObject = game.getObject(source.getSourceId());
+                    MageObject sourceObject = game.getObject(source);
                     if (sourceObject == null) {
                         return false;
                     }

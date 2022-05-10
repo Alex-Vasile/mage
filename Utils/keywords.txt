@@ -6,16 +6,20 @@ Assist|new|
 Basic landcycling|cost|
 Battle cry|new|
 Bestow|card, manaString|
+Blitz|card, manaString|
 Bloodthirst|number|
 Bushido|number|
 Buyback|manaString|
 Cascade|new|
+Casualty|card, number|
 Changeling|new|
+Cleave|card, manaString|
+Compleated|instance|
 Convoke|new|
 Crew|number|
 Cumulative upkeep|cost|
 Cycling|cost|
-Dash|card, manaString|
+Dash|manaString|
 Daybound|new|
 Deathtouch|instance|
 Demonstrate|new|
@@ -48,8 +52,10 @@ Flying|instance|
 Forestcycling|cost|
 Forestwalk|new|
 Foretell|card, manaString|
+Friends forever|instance|
 Haste|instance|
 Hexproof|instance|
+Hideaway|number|
 Improvise|new|
 Indestructible|instance|
 Infect|instance|
@@ -62,7 +68,7 @@ Kicker|manaString|
 Level up|cost|
 Lifelink|instance|
 Living weapon|new|
-Madness|card, cost|
+Madness|cost|
 Melee|new|
 Menace|new|
 Mentor|new|
@@ -70,11 +76,11 @@ Miracle|cost|
 Modular|card, number|
 Mountaincycling|cost|
 Mountainwalk|new|
-Morph|card, cost|
+Morph|cost|
 Mutate|card, manaString|
 Myriad|new|
 Nightbound|new|
-Ninjutsu|cost|
+Ninjutsu|manaString|
 Outlast|cost|
 Partner|instance|
 Persist|new|
@@ -86,13 +92,14 @@ Provoke|new|
 Prowess|new|
 Reach|instance|
 Rebound|new|
+Reconfigure|manaString|
 Renown|number|
-Replicate|card, manaString|
+Replicate|manaString|
 Riot|new|
 Scavenge|cost|
 Shadow|instance|
 Shroud|instance|
-Soulbond|instance|
+Soulbond|new|
 Soulshift|number|
 Skulk|new|
 Spectacle|card, cost|
@@ -102,6 +109,7 @@ Suspend|number, cost, card|
 Swampcycling|cost|
 Swampwalk|new|
 Totem armor|new|
+Training|new|
 Trample|instance|
 Tribute|number|
 Unblockable|new|

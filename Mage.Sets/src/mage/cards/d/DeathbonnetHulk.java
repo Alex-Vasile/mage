@@ -30,7 +30,6 @@ public final class DeathbonnetHulk extends CardImpl {
         this.power = new MageInt(3);
         this.toughness = new MageInt(3);
         this.color.setGreen(true);
-        this.transformable = true;
         this.nightCard = true;
 
         // At the beginning of your upkeep, you may exile a card from a graveyard. If a creature card was exiled this way, put a +1/+1 counter on Deathbonnet Hulk.
@@ -74,7 +73,7 @@ class DeathbonnetHulkEffect extends OneShotEffect {
         }
         TargetCard target = new TargetCardInGraveyard(0, 1);
         target.setNotTarget(true);
-        player.choose(outcome, target, source.getSourceId(), game);
+        player.choose(outcome, target, source, game);
         Card card = game.getCard(target.getFirstTarget());
         if (card == null) {
             return false;
